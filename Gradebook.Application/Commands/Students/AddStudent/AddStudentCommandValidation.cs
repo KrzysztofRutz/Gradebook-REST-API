@@ -26,6 +26,11 @@ public class AddStudentCommandValidation : AbstractValidator<AddStudentCommand>
         RuleFor(x => x.YearEnrolled)
            .NotEmpty().WithMessage("Year enrolled name is required.");
 
+        RuleFor(x => x.TypeOfStudies)
+            .NotEmpty().WithMessage("Type of studies is required.")
+            .Must(x => x == "Stationary" || x == "Part-time").WithMessage("Type of studies has not valid name.")
+            .MaximumLength(10).WithMessage("Type of studies cannot be longer than 10 characters.");
+
         RuleFor(x => x.StreetName)
          .NotEmpty().WithMessage("Street name is required.")
          .MaximumLength(100).WithMessage("Street name cannot be longer than 100 characters.");

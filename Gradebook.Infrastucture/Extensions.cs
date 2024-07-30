@@ -19,6 +19,7 @@ public static class Extensions
         services.AddScoped<IStudentReadOnlyRepository, StudentReadOnlyRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
 
+        services.AddScoped<IGradeReadOnlyRepository, GradeReadOnlyRepository>();
         services.AddScoped<IGradeRepository, GradeRepository>();
 
         services.AddDbContext<GradebookDbContext>(ctx => ctx.UseSqlServer(configuration.GetConnectionString("GradebookCS")));

@@ -73,7 +73,7 @@ public class StudentsController : Controller
     [HttpPut]
     [SwaggerOperation("Update student")]
     [ProducesResponseType((int)HttpStatusCode.NoContent)]
-    public async Task<ActionResult> Put([FromBody] UpdateStudentCommand command)
+    public async Task<ActionResult> Put([FromBody]UpdateStudentCommand command)
     {
         await _mediator.Send(command);
         return NoContent();

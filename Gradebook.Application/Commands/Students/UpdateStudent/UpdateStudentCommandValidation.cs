@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Gradebook.Application.Commands.Students.AddStudent;
 
 namespace Gradebook.Application.Commands.Students.UpdateStudent;
 
@@ -26,5 +25,10 @@ public class UpdateStudentCommandValidation : AbstractValidator<UpdateStudentCom
 
         RuleFor(x => x.YearEnrolled)
            .NotEmpty().WithMessage("Year enrolled name is required.");
+
+        RuleFor(x => x.TypeOfStudies)
+            .NotEmpty().WithMessage("Type of studies is required.")
+            .Must(x => x == "Stationary" || x == "Part-time").WithMessage("Type of studies has not valid name.")
+            .MaximumLength(10).WithMessage("Type of studies cannot be longer than 10 characters.");
     }
 }

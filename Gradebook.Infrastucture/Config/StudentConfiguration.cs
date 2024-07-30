@@ -41,6 +41,10 @@ public class StudentConfiguration : BaseEntityConfiguration<Student>
             .WithOne(x => x.Student)
             .HasForeignKey<Address>(x => x.StudentId);
 
+        builder.Property(x => x.TypeOfStudies)
+            .HasMaxLength(10)
+            .IsRequired();
+
         base.Configure(builder);
     }
 }

@@ -8,4 +8,5 @@ public class StudentDto
     public string Email { get; set; }
     public int Age { get; set; }
     public int YearEnrolled { get; set; }
+    public string TypeOfStudies { get; set; }
 }

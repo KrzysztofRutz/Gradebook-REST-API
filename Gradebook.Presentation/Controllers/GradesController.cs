@@ -1,6 +1,7 @@
 ﻿using Gradebook.Application.Commands.Grades.AddGrade;
 using Gradebook.Application.Commands.Grades.RemoveGrade;
 using Gradebook.Application.Dtos;
+using Gradebook.Application.Queries.Grades.GetGrades;
 using Gradebook.Application.Queries.Grades.GetGradeStudents;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,15 @@ public class GradesController : Controller
     public GradesController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet()]
+    [SwaggerOperation("Get grades.")]
+    [ProducesResponseType(typeof(IEnumerable<GradeDto>), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Get()
+    {
+        var result = await _mediator.Send(new GetGradesQuery());
+        return Ok(result);
     }
 
     [HttpGet("{id}/students")]

@@ -11,6 +11,7 @@ public class AddStudentCommand : ICommand<StudentDto>
     public string Email { get; set; }
     public DateOnly DateOfBirth { get; set; }
     public int YearEnrolled { get; set; }
+    public string TypeOfStudies { get; set; }
 
     public string StreetName { get; set; }
     public string StreetNumber { get; set; }

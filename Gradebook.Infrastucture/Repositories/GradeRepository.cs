@@ -14,6 +14,9 @@ internal class GradeRepository : IGradeRepository
         _dbContext = dbContext;
     }
 
+    public async Task<IEnumerable<Grade>> Get(CancellationToken cancellationToken)
+        => await _dbContext.Grades.AsNoTracking().ToListAsync(cancellationToken);
+
     public async Task<Grade> GetByIdAsync(int id, CancellationToken cancellationToken)
         => await _dbContext.Grades.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
 
@@ -27,5 +30,5 @@ internal class GradeRepository : IGradeRepository
         => _dbContext.Grades.Add(grade);
 
     public void Delete(Grade grade)
-        => _dbContext.Grades.Remove(grade);
+        => _dbContext.Grades.Remove(grade);  
 }

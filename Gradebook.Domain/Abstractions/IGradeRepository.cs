@@ -4,6 +4,8 @@ namespace Gradebook.Domain.Abstractions;
 
 public interface IGradeRepository
 {
+    Task<IEnumerable<Grade>> Get(CancellationToken cancellationToken);
+
     Task<Grade> GetByIdAsync(int id, CancellationToken cancellationToken);
 
     Task<Grade> GetByIdAsyncWithStudentsAsync(int id, CancellationToken cancellationToken);

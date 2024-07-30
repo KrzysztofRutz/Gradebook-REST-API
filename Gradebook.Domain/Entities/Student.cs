@@ -12,4 +12,6 @@ public class Student : Entity
     public Grade Grade { get; set; }
 
     public Address Address { get; set; }
+
+    public string TypeOfStudies { get; set; }
 }

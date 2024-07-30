@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Gradebook.Infrastructure.Migrations
 {
     [DbContext(typeof(GradebookDbContext))]
-    [Migration("20230705064206_AddGradesTable")]
-    partial class AddGradesTable
+    [Migration("20240730191226_CreateDatabaseGradebookDB")]
+    partial class CreateDatabaseGradebookDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,57 @@ namespace Gradebook.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Gradebook.Domain.Entities.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2(0)");
+
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<string>("StreetName")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<string>("StreetNumber")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<int?>("StudentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2(0)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId")
+                        .IsUnique()
+                        .HasFilter("[StudentId] IS NOT NULL");
+
+                    b.ToTable("Addresses", "gradebook");
+                });
 
             modelBuilder.Entity("Gradebook.Domain.Entities.Grade", b =>
                 {
@@ -81,10 +132,18 @@ namespace Gradebook.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int?>("GradeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TypeOfStudies")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2(0)");
@@ -97,7 +156,37 @@ namespace Gradebook.Infrastructure.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
+                    b.HasIndex("GradeId");
+
                     b.ToTable("Students", "gradebook");
+                });
+
+            modelBuilder.Entity("Gradebook.Domain.Entities.Address", b =>
+                {
+                    b.HasOne("Gradebook.Domain.Entities.Student", "Student")
+                        .WithOne("Address")
+                        .HasForeignKey("Gradebook.Domain.Entities.Address", "StudentId");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Gradebook.Domain.Entities.Student", b =>
+                {
+                    b.HasOne("Gradebook.Domain.Entities.Grade", "Grade")
+                        .WithMany("Students")
+                        .HasForeignKey("GradeId");
+
+                    b.Navigation("Grade");
+                });
+
+            modelBuilder.Entity("Gradebook.Domain.Entities.Grade", b =>
+                {
+                    b.Navigation("Students");
+                });
+
+            modelBuilder.Entity("Gradebook.Domain.Entities.Student", b =>
+                {
+                    b.Navigation("Address");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Gradebook.Application.Configuration.Commands;
+﻿using Gradebook.Application.Configuration.Commands;
 using Gradebook.Domain.Abstractions;
 using Gradebook.Domain.Exceptions;
 
@@ -30,6 +28,7 @@ internal class UpdateStudentCommandHandler : ICommandHandler<UpdateStudentComman
         student.Email = request.Email;
         student.DateOfBirth = request.DateOfBirth;
         student.YearEnrolled = request.YearEnrolled;
+        student.TypeOfStudies = request.TypeOfStudies;
 
         _studentRepository.Update(student);
         await _unitOfWork.SaveChangesAsync();

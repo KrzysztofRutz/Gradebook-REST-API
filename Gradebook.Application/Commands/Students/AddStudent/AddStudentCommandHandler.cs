@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
-using FluentValidation.Results;
 using Gradebook.Application.Configuration.Commands;
 using Gradebook.Application.Dtos;
 using Gradebook.Domain.Abstractions;
@@ -37,6 +35,7 @@ internal class AddStudentCommandHandler : ICommandHandler<AddStudentCommand, Stu
             Email = request.Email,
             DateOfBirth = request.DateOfBirth,
             YearEnrolled = request.YearEnrolled,
+            TypeOfStudies = request.TypeOfStudies,
             Address = new Address()
             {
                 StreetName = request.StreetName,
