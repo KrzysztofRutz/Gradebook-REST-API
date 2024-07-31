@@ -1,5 +1,6 @@
 ﻿using Gradebook.Application.Configuration.Commands;
 using Gradebook.Domain.Abstractions;
+using Gradebook.Domain.Entities;
 using Gradebook.Domain.Exceptions;
 
 namespace Gradebook.Application.Commands.Students.UpdateStudent;
@@ -29,6 +30,14 @@ internal class UpdateStudentCommandHandler : ICommandHandler<UpdateStudentComman
         student.DateOfBirth = request.DateOfBirth;
         student.YearEnrolled = request.YearEnrolled;
         student.TypeOfStudies = request.TypeOfStudies;
+        student.Address = new Address()
+        {
+            StreetName = request.StreetName,
+            StreetNumber = request.StreetNumber,
+            City = request.City,
+            PostalCode = request.PostalCode,
+            Country = request.Country
+        };
 
         _studentRepository.Update(student);
         await _unitOfWork.SaveChangesAsync();

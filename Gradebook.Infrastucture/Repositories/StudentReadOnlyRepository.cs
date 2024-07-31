@@ -26,4 +26,14 @@ internal class StudentReadOnlyRepository : IStudentReadOnlyRepository
             .Include(x => x.Grade)
             .AsNoTracking().ToListAsync(cancellation);
     }
+
+    public async Task<IEnumerable<Student>> GetByYearEnrolledAsync(CancellationToken cancellation = default)
+    {
+        return await _dbContext.Students.AsNoTracking().ToListAsync(cancellation);
+    }
+
+    public async Task<IEnumerable<Student>> GetByYearEnrolledAsync(int YearEnrolled, CancellationToken cancellation = default)
+    {
+        return await _dbContext.Students.Where(x => x.YearEnrolled == YearEnrolled).AsNoTracking().ToListAsync(cancellation);
+    }
 }
