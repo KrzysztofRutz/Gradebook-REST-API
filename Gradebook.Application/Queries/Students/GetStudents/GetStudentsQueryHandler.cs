@@ -18,7 +18,7 @@ internal class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, IEnum
 
     public async Task<IEnumerable<StudentDto>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
     {
-        var students = await _studentReadOnlyRepository.GetAllAsync(cancellationToken);
+        var students = await _studentReadOnlyRepository.GetAllAsync(request.YearEnrolled, cancellationToken);
 
         var studentsDto = _mapper.Map<IEnumerable<StudentDto>>(students);
 

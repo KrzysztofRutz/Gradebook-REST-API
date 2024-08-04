@@ -25,7 +25,7 @@ public class AddStudentCommandHandlerTests
     public async Task Handle_Should_CallAddOnReposiotry_WhenEmailIsUnique() 
     {
         // Arrange
-        var comman = new AddStudentCommand()
+        var command = new AddStudentCommand()
         {
             FirstName = "Jan",
             LastName = "Kowalski",
@@ -49,7 +49,7 @@ public class AddStudentCommandHandlerTests
             _mapper);
 
         // Act 
-        var studentDto = await handler.Handle(comman, default);
+        var studentDto = await handler.Handle(command, default);
 
         // Assert
         _studentRepositoryMock.Verify(

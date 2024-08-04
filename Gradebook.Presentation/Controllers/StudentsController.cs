@@ -6,7 +6,6 @@ using Gradebook.Application.Dtos;
 using Gradebook.Application.Queries.Students.GetStudentByEmail;
 using Gradebook.Application.Queries.Students.GetStudentById;
 using Gradebook.Application.Queries.Students.GetStudents;
-using Gradebook.Application.Queries.Students.GetStudentsByYearEnrolled;
 using Gradebook.Application.Queries.Students.GetStudentsWithDetails;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -29,9 +28,9 @@ public class StudentsController : Controller
     [HttpGet]
     [SwaggerOperation("Get students")]
     [ProducesResponseType(typeof(IEnumerable<StudentDto>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult> Get()
+    public async Task<ActionResult> Get([FromQuery]int YearEnrolled)
     {
-        var result = await _mediator.Send(new GetStudentsQuery());
+        var result = await _mediator.Send(new GetStudentsQuery(YearEnrolled));
         return Ok(result);
     }
 
@@ -41,15 +40,6 @@ public class StudentsController : Controller
     public async Task<ActionResult> GetWithDetails()
     {
         var result = await _mediator.Send(new GetStudentsWithDetailsQuery());
-        return Ok(result);
-    }
-
-    [HttpGet("[action]/{yearEnrolled}")]
-    [SwaggerOperation("Get students with details")]
-    [ProducesResponseType(typeof(IEnumerable<StudentDto>), (int)HttpStatusCode.OK)]
-    public async Task<ActionResult> GetByYearEnrolled([FromRoute]int yearEnrolled)
-    {
-        var result = await _mediator.Send(new GetStudentsByYearEnrolledQuery(yearEnrolled));
         return Ok(result);
     }
 

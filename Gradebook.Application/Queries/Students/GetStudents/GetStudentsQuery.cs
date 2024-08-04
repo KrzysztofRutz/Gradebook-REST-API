@@ -3,6 +3,6 @@ using MediatR;
 
 namespace Gradebook.Application.Queries.Students.GetStudents;
 
-public record GetStudentsQuery() : IRequest<IEnumerable<StudentDto>>
+public record GetStudentsQuery(int YearEnrolled) : IRequest<IEnumerable<StudentDto>>
 {
 }
